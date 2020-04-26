@@ -1,0 +1,46 @@
+<div class="container">
+  <%= link_to "Volver", posts_path, class: "link"%>
+  <div class="contenedor">
+    <% renderer = Redcarpet::Render::HTML.new(no_links: true, hard_wrap: true)%>
+    <% markdown = Redcarpet::Markdown.new(renderer, extensions = {})%>
+
+    <h1><%=@post.title %></h1>
+      <p class = "info">Publicado por <b><%= @post.author %></b> hace <b> <%= time_ago_in_words(@post.created_at, scope: 'datetime.distance_in_words' ).gsub( "and", "y" )%></b></p>
+      <%= markdown.render(@post.content).html_safe%>
+  </div>
+
+  <h2>Comentarios</h2>
+  <div class="comment_section">
+    <% if @comments.empty?%>
+      <p>No hay comentarios en este post</p>
+      <%else%>
+    <% @comments.each do |commentario| %>
+      <div class="comentario">
+      <p>Publicado por <b><%=commentario.author%></b> hace <b> <%= time_ago_in_words(commentario.created_at, scope: 'datetime.distance_in_words' ).gsub( "and", "y" ) %></b></p>
+
+      <%= markdown.render(commentario.comment).html_safe %>
+      <% if user_signed_in? %>
+        <% if (commentario.author == current_user.email) || @post.author == current_user.email %>
+          <p><%= link_to 'Eliminar Comentario', post_comment_path( @post, commentario ), :method => :delete, :data => { :confirm => '¿Estás seguro?' } %> </p>
+        <%end%>
+      <%end%>
+
+      </div>
+      <%end%>
+    <%end%>
+
+    <% if user_signed_in? %>
+    <h2>Agrega un comentario</h2>
+    <%= form_for([@post, @post.comments.build]) do |f| %>
+      <div>
+        <%= f.text_area :comment, class: "cuerpocoment"  %>
+      </div>
+        <%= f.hidden_field :author, :value => current_user.email %>
+      <div>
+        <%= f.submit 'Comentar', class: "btn btn-primary"  %>
+      </div>
+      <% end %>
+    <% end %>
+
+</div>
+</div>
