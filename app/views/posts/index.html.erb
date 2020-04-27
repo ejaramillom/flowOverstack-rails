@@ -1,49 +1,54 @@
 <div class="container">
   <div class="row">
     <div class="col-lg-12">
-        <div class="table-responsive">
-          <table class="table ">
-            <tbody>
-              <% @posts.each do |post| %>
-              <tr>
-                <td>
-                  <div class="votes"><%= pluralize( post.votes.size, 'Votos') %></div>
-                  <a href="#">
-                    <span class="glyphicon glyphicon-triangle-top"></span>
-                  </a>
-                  <a href="#">
-                    <span class="glyphicon glyphicon-triangle-bottom"></span>
-                  </a>
-                </td>
-                <td>
-                  <div class="votes"><%= pluralize(post.answers.size, 'Respuestas') %></div>
-                </td>
-                <td>
-                  <div class="name">
-                    <h4><span><%= link_to post.name, post_path(post), class: 'title' %></span></h4>
-                    <p class="asked">Preguntó <%= post.user.email %> hace <%= time_ago_in_words(post.created_at)%> </p>
-                  </div>
-                </td>
-                <td >
-                <div class="votes">
-                <% if user_signed_in? %>
-                  <% if current_user.id == post.user_id %>
-                    <%= form_tag(post_path(post.id), method: :delete, data: { confirm: '¿De verdad deseas borrarlo?' }) do%>
-                      <%= button_tag( class: "btn icon-t pull-right") do %>
-                        <span class="glyphicon glyphicon-trash"></span>
-                      <% end %>
-                    <% end %>
-                    <%= link_to edit_post_path(post.id), class: "btn icon-t pull-right" do  %>
-                      <span class="glyphicon glyphicon-pencil"></span>
+      <div class="table-responsive">
+        <table class="table ">
+          <tbody>
+            <% @posts.each do |post| %>
+            <tr>
+              <td>
+                <% if post.voted_by? current_user %>
+                <%= link_to post_vote_path( post ), method: :delete, class: "" do %>
+                  <span class="glyphicon glyphicon-arrow-down"></span>
+                <% end %>
+                <% else %>
+                <%= link_to post_vote_path( post ), method: :post, class: "product-upvote" do %>
+                  <span class="glyphicon glyphicon-arrow-up"></span>
+                <% end %>
+              <% end %>
+              </td>
+              <td>
+                <div><%= pluralize( post.votes.size, 'Votos') %></div>
+              </td>
+              <td>
+                <div><%= pluralize(post.answers.size, 'Respuestas') %></div>
+              </td>
+              <td>
+                <div>
+                  <h4><span><%= link_to post.name, post_path(post), class: 'title' %></span></h4>
+                  <p>Preguntó <%= post.user.email %> hace <%= time_ago_in_words(post.created_at)%> </p>
+                </div>
+              </td>
+              <td >
+              <div>
+              <% if user_signed_in? %>
+                <% if current_user.id == post.user_id %>
+                  <%= form_tag(post_path(post.id), method: :delete, data: { confirm: '¿De verdad deseas borrarlo?' }) do%>
+                    <%= button_tag( class: "btn icon-t pull-right") do %>
+                      <span class="glyphicon glyphicon-trash"></span>
                     <% end %>
                   <% end %>
+                  <%= link_to edit_post_path(post.id), class: "btn icon-t pull-right" do  %>
+                    <span class="glyphicon glyphicon-pencil"></span>
+                  <% end %>
                 <% end %>
-                </div>
-                </td>
-              </tr>
               <% end %>
-            </tbody>
-          </table>
+              </div>
+              </td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>

@@ -6,7 +6,7 @@ class VotesController < ApplicationController
 	    post = Post.find(params[:post_id])
 	    post.votes.create(user: current_user)
 
-	    redirect_to post
+	    redirect_to posts_path
 	  elsif params[:answer_id].present?
 	    answer = Answer.find(params[:answer_id])
 	    answer.votes.create(user: current_user)
@@ -20,7 +20,7 @@ class VotesController < ApplicationController
 	    post = Post.find(params[:post_id])
 	    post.votes.where(user: current_user).take.try(:destroy)
 
-	    redirect_to post
+	    redirect_to posts_path
 	  elsif params[:answer_id].present?
 	    answer = Answer.find(params[:answer_id])
 	    answer.votes.where(user: current_user).take.try(:destroy)

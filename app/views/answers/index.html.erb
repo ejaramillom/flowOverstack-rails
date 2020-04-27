@@ -1,2 +1,12 @@
-<h1>Answer#index</h1>
-<p>Find me in app/views/answer/index.html.erb</p>
+<% if user_signed_in? %>
+
+  <%= form_for [ @post, @post.answers.build ] do |f| %>
+    <div class="form-group"><%= f.text_area :body, class: "form-control", placeholder: ""%></div>
+    <%= f.submit "Responder", class: "btn btn-primary" %>
+  <% end %>
+
+<% else %>
+
+  <div><%= link_to "Responder", user_session_path, class: "btn btn-primary" %></div>
+  
+<% end %>

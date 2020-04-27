@@ -1,4 +1,4 @@
-<% if @post.author == current_user.email %>
+<% if @post.user_id == current_user.id %>
 <div class="container">
   <h1>Editar Post</h1>
   <% if @post.errors.any? %>
@@ -9,13 +9,13 @@
   <%= form_for @post do |f| %>
     <div>
       <b><%= f.label "Título"  %></b><br>
-      <%= f.text_field :title, class: "titulo"  %>
+      <%= f.text_field :name, class: "titulo"  %>
     </div>
     <div>
       <b><%= f.label "Cuerpo" %></b><br>
-      <%= f.text_area :content, class: "cuerpo"  %>
+      <%= f.text_area :body, class: "cuerpo"  %>
     </div>
-    <%= f.hidden_field :author, :value => current_user.email %>
+    <%= f.hidden_field :user_id, :value => current_user.id %>
     <div>
       <%= f.submit 'Editar post', class: "btn btn-primary"  %>
     </div>

@@ -6,5 +6,6 @@ class User < ApplicationRecord
   has_many :posts
   has_many :comments
   has_many :answers
+  has_many :votes
 
 end

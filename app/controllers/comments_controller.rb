@@ -13,13 +13,29 @@ class CommentsController < ApplicationController
 			answer = Answer.find(params[:answer_id])
 			comment_answer = answer.comments.new(comments_params)
 				if comment_answer.save
-					redirect_to answer.question
+					redirect_to answer.post
 				else
-					redirect_to answer.question, alert: "La respuestas no puede estar vacia"
+					redirect_to answer.post, alert: "La respuestas no puede estar vacia"
 				end
 		else
 			@errors = answer.errors.full_messages
 		end
+	end
+
+	def destroy
+		comment = Comment.find(params[:id])
+		comment.destroy
+
+		if params[:post_id].present?
+			post = Post.find(params[:post_id])
+
+			redirect_to post
+		elsif params[:answer_id].present?
+			answer = Answer.find(params[:answer_id])
+
+			redirect_to answer.post
+		end
+		flash[:notice] = "El comentario ha sido eliminado exitosamente"
 
 	end
 

@@ -14,7 +14,7 @@ end
 users_ids = User.all.pluck(:id)
 
 6 .times do |post|
-  Post.create(name: Faker::GreekPhilosophers.name, body: Faker::Books::Lovecraft.sentence, user_id: users_ids.sample)
+  Post.create(name: Faker::Games::Witcher.quote, body: Faker::Books::Lovecraft.sentence, user_id: users_ids.sample)
 end
 posts_ids = Post.all.pluck(:id)
 

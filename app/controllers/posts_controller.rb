@@ -3,11 +3,15 @@ class PostsController < ApplicationController
 
     def index
       @posts = Post.order("created_at DESC")
+      if params[:name].present?
+        @posts = @posts.where("name LIKE ?", "%#{params[:name]}%")
+      end
     end
 
     def show
       @post = Post.find(params[:id])
       @comments = @post.comments
+      @answers = @post.answers
     end
 
     def new
