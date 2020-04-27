@@ -61,6 +61,8 @@ ActiveRecord::Schema.define(version: 2020_04_24_164322) do
     t.text "body"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "user_id"
+    t.index ["user_id"], name: "index_votes_on_user_id"
     t.index ["votable_type", "votable_id"], name: "index_votes_on_votable_type_and_votable_id"
   end
 
@@ -68,4 +70,5 @@ ActiveRecord::Schema.define(version: 2020_04_24_164322) do
   add_foreign_key "answers", "users"
   add_foreign_key "comments", "users"
   add_foreign_key "posts", "users"
+  add_foreign_key "votes", "users"
 end
