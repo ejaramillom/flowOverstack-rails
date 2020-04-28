@@ -4,36 +4,48 @@
     <title>Flow Overstack | Rails</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
   </head>
 
   <body class="p-5">
-    <nav class="navbar navbar-expand bg-primary navbar-dark navbar-static-top">
-      <form class="form-inline">
-        <a class="navbar-brand" href="<%= posts_path %>"> Flow | Over <strong>Stack</strong></a>
+    <nav class="navbar navbar-expand-md bg-primary navbar-dark navbar-static-top rounded-lg">
+      <a class="navbar-brand" href="<%= posts_path %>">Flow | Over <strong>Stack</strong></a>
+        <div class="navbar-collapse collapse" id="collapsingNavbar">
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbar">
+            <span class="navbar-toggler-icon"></span>
+          </button>
 
-        <%= form_tag posts_path, method: :get do %>
-          <div class="form-group">
-            <%= text_field_tag :name, params[:name], class: "form-control", placeholder: "Buscar" %>
-          </div>
-            <%= submit_tag "Buscar", name: nil, class: "btn btn-primary btn-md" %>
-        <% end %>
+          <ul class="navbar-nav ml-auto">
+            <% if signed_in? %>
+            <li class="nav-item">
+              <button type="button" class="btn btn-primary"><%= link_to "Nuevo post", new_post_path , class: "text-white" %> </button>
+            </li>
+            <li class="nav-item">
+              <button type="button" class="btn btn-primary"><%= link_to "Salir", destroy_user_session_path, class: "text-white", method: :delete %> </button>
+            </li>
+            <% else %>
+            <li class="nav-item">
+              <button type="button" class="btn btn-primary"><%= link_to "Registrarse", new_user_registration_path, class: "text-white" %> </button>
+            </li>
+            <li class="nav-item">
+              <button type="button" class="btn btn-primary"><%= link_to "Ingresar", user_session_path, class: "text-white" %> </button>
+            </li>
+            <% end %>
 
-        <% if signed_in? %>
-          <button type="button" class="btn btn-primary"><%= link_to "Nuevo post", new_post_path %> </button>
-          <button type="button" class="btn btn-primary"><%= link_to "Salir", destroy_user_session_path, method: :delete %> </button>
-        <% else %>
-          <button type="button" class="btn btn-primary text-white btn-md"><%= link_to "Registrarse", new_user_registration_path, class: "text-white" %> </button>
-          <button type="button" class="btn btn-primary"><%= link_to "Ingresar", user_session_path, class: "text-white" %> </button>
-        <% end %>
-
-      </form>
+            <%= form_tag posts_path, class: "form-inline", method: :get do %>
+              <%= text_field_tag :name, params[:name], class: "form-control", placeholder: "Buscar" %>
+              <%= submit_tag "Buscar", name: nil, class: "btn btn-primary btn-md" %>
+            <% end %>
+          </ul>
+        </div>
     </nav>
 
-  <div class="container-fluid">
+  <div class="container-fluid m-3">
     <div class="row">
       <div class="col">
         <% if flash[:notice] %>
@@ -43,7 +55,7 @@
     </div>
   </div>
 
-    <div class="container-fluid">
+    <div class="container-fluid m-3">
       <div class="row">
         <div class="col">
           <% if flash[:alert] %>
@@ -54,6 +66,10 @@
     </div>
 
   <%= yield %>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
   </body>
 </html>

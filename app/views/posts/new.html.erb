@@ -1,23 +1,35 @@
 <% if user_signed_in? %>
 <div class="container">
   <h1>Nuevo Post</h1>
+
   <% if @post.errors.any? %>
-    <% @post.errors.full_messages.each do |message| %>
-      <li class ="error"><%= message %></li>
-    <% end %>
+    <div id="error_explanation" class="error">
+      <h4>
+        <%= I18n.t("errors.messages.not_saved",
+                   count: @post.errors.count,
+                   resource: @post.class.model_name.human.downcase)
+         %>
+      </h4>
+      <ul>
+        <% @post.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
   <% end %>
+
   <%= form_for @post do |f| %>
     <div>
       <b><%= f.label "Título"  %></b><br>
-      <%= f.text_field :name, class: "titulo"   %>
+      <%= f.text_field :name, class: "form-control"   %>
     </div>
     <div>
       <b><%= f.label "Cuerpo" %></b><br>
-      <%= f.text_area :body, class: "cuerpo"  %>
+      <%= f.text_area :body, class: "form-control"  %>
     </div>
       <%= f.hidden_field :user_id, :value => current_user.id %>
     <div>
-      <%= f.submit  'Crear post', class: "btn btn-primary"  %>
+      <%= f.submit 'Crear post', class: "btn btn-primary my-2" %>
     </div>
   <% end %>
 

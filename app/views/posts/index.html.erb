@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="row">
+  <div class="row justify-content-end align-items-center">
     <div class="col-lg-12">
       <div class="table-responsive">
         <table class="table ">
@@ -8,12 +8,12 @@
             <tr>
               <td>
                 <% if post.voted_by? current_user %>
-                <%= link_to post_vote_path( post ), method: :delete, class: "" do %>
-                  <span class="glyphicon glyphicon-arrow-down"></span>
+                <%= link_to post_vote_path( post ), method: :delete do %>
+                  <i class="fas fa-caret-down bigIcon"></i>
                 <% end %>
                 <% else %>
-                <%= link_to post_vote_path( post ), method: :post, class: "product-upvote" do %>
-                  <span class="glyphicon glyphicon-arrow-up"></span>
+                <%= link_to post_vote_path( post ), method: :post do %>
+                  <i class="fas fa-caret-up bigIcon"></i>
                 <% end %>
               <% end %>
               </td>
@@ -25,8 +25,8 @@
               </td>
               <td>
                 <div>
-                  <h4><span><%= link_to post.name, post_path(post), class: 'title' %></span></h4>
-                  <p>Preguntó <%= post.user.email %> hace <%= time_ago_in_words(post.created_at)%> </p>
+                  <h5><span><%= link_to post.name, post_path(post), class: 'title' %></span></h5>
+                  <p class="usernameSize">Preguntó <%= post.user.email %> hace <%= time_ago_in_words(post.created_at)%> </p>
                 </div>
               </td>
               <td >
@@ -35,11 +35,11 @@
                 <% if current_user.id == post.user_id %>
                   <%= form_tag(post_path(post.id), method: :delete, data: { confirm: '¿De verdad deseas borrarlo?' }) do%>
                     <%= button_tag( class: "btn icon-t pull-right") do %>
-                      <span class="glyphicon glyphicon-trash"></span>
+                    <i class="far fa-window-close mediumIcon mx-auto"></i>
                     <% end %>
                   <% end %>
                   <%= link_to edit_post_path(post.id), class: "btn icon-t pull-right" do  %>
-                    <span class="glyphicon glyphicon-pencil"></span>
+                    <i class="fas fa-edit mediumIcon mx-auto"></i>
                   <% end %>
                 <% end %>
               <% end %>

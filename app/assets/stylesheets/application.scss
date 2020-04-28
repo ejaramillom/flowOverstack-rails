@@ -1,4 +1,27 @@
 // "bootstrap-sprockets" must be imported before "bootstrap" and "bootstrap/variables"
-@import "bootstrap-sprockets";
-@import "theme";
 @import "bootstrap";
+
+.bigIcon {
+
+font-size:40px;
+
+}
+
+.mediumIcon {
+
+font-size:25px;
+color:#2196F3;
+
+}
+
+.usernameSize {
+
+font-size:13px;
+
+}
+
+.error {
+
+color:red;
+
+}
